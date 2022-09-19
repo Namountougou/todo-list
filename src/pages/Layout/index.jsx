@@ -21,7 +21,7 @@ function Main() {
     };
 
     if (todo === "") {
-      toast("Please enter a task");
+      toast.error("Please enter a task");
       return;
     }
     setNewTasks([...newTasks, newTask]);
