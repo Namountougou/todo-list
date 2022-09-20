@@ -1,9 +1,6 @@
 import React from "react";
 import {
-  Box,
   Divider,
-  TextField,
-  Button,
   Switch,
   Typography,
 } from "@mui/material";
@@ -12,13 +9,9 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Checkbox,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import { useState } from "react";
-import { Task } from "@mui/icons-material";
-import Main from "../../pages/Layout";
 
 const ItemList = (props) => {
   const { tasks, deleteTask, onCompletedTask } = props;

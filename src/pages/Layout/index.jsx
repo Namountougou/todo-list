@@ -26,8 +26,10 @@ function Main() {
     }
     setNewTasks([...newTasks, newTask]);
     setTodo("");
+    localStorage.setItem("newTasks", JSON.stringify(newTasks));
     console.log(newTasks);
   };
+  const localTodo = JSON.parse(localStorage.getItem("newTasks"));
 
   const handleChange = (event, newValue) => {
     // if newValues is 1, then it is the active tab
@@ -45,7 +47,8 @@ function Main() {
       confirmButtonText: "Yes",
     }).then((result) => {
       if (result.isConfirmed) {
-        const updatedTasks = newTasks.filter((task) => task.id !== id);
+        const updatedTasks = localTodo.filter((task) => task.id !== id);
+        localStorage.setItem("newTasks", JSON.stringify(updatedTasks));
         setNewTasks(updatedTasks);
         Swal.fire("Deleted!", "Your file has been deleted.", "success");
       }
@@ -54,20 +57,21 @@ function Main() {
 
 
   const onCompletedTask = (id) => {
-    const completedTask = newTasks.map((task) => {
+    const completedTask = localTodo.map((task) => {
       if (task.id === id) {
         task.completed = !task.completed;
       }
       return task;
     });
+    localStorage.setItem("newTasks", JSON.stringify(completedTask));
     setNewTasks(completedTask);
   };
 
   const renderTasks = useCallback(
     ({ completed }) => {
-      return newTasks.filter((task) => task.completed === completed);
+      return localTodo.filter((task) => task.completed === completed);
     },
-    [newTasks]
+    [localTodo]
   );
 
   return (
@@ -167,7 +171,7 @@ function Main() {
             }}
           >
             <Tabpanel value={value} index={0}>
-              {All(newTasks, deleteTask, onCompletedTask)}
+              {All(localTodo, deleteTask, onCompletedTask)}
             </Tabpanel>
             <Tabpanel value={value} index={1}>
               {Active(
