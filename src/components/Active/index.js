@@ -1,11 +1,18 @@
-import React from "react";
+import { Box } from "@mui/material";
+import UseTodo from "../../state-manage/hook/useTodo";
 import ItemList from "../ItemList";
 
+const Active = () => {
+  const { todoActive } = UseTodo();
 
-const Active = (tasks, deleteTask, onCompletedTask) => {
-  const taskActive = tasks.filter((todo) => todo.completed === false);
-  return (
-    <ItemList tasks={taskActive} deleteTask={deleteTask} onCompletedTask={onCompletedTask} />
-  );
+  if (todoActive.length === 0) {
+    return (
+      <Box>
+        <p>Aucun element</p>
+      </Box>
+    );
+  }
+
+  return <ItemList tasks={todoActive} />;
 };
 export default Active;

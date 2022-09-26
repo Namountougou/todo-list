@@ -1,18 +1,16 @@
-import React, { useCallback } from "react";
+import { Box,Button,Tab,Tabs,TextField } from "@mui/material";
 import { useState } from "react";
-import { Box, Tabs, Tab, TextField, Button } from "@mui/material";
-import Tabpanel from "../../components/tabs/Tabpanel";
-import { a11yProps } from "../../components/tabs/allyprops";
-import All from "../../components/Tout";
-import Active from "../../components/Active";
-import Termine from "../../components/Termine";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
-
+import Active from "../../components/Active";
+import { a11yProps } from "../../components/tabs/allyprops";
+import TabPanel from "../../components/tabs/Tabpanel";
+import Finished from "../../components/Termine";
+import All from "../../components/Tout";
+import UseTodo from "../../state-manage/hook/useTodo";
 function Main() {
   const [value, setValue] = useState(0);
   const [todo, setTodo] = useState("");
-  const [newTasks, setNewTasks] = useState([]);
+
   const addTask = () => {
     const newTask = {
       id: new Date().getTime().toString(),
@@ -21,58 +19,25 @@ function Main() {
     };
 
     if (todo === "") {
-      toast.error("Please enter a task");
+      Swal.fire({
+        title: "Please enter a task",
+        icon: "error",
+        timer: 2000,
+      });
       return;
     }
-    setNewTasks([...newTasks, newTask]);
+
+    const newTodos = [...newTasks, newTask];
+    setNewTasks(newTodos);
     setTodo("");
-    localStorage.setItem("newTasks", JSON.stringify(newTasks));
-    console.log(newTasks);
+    localStorage.setItem("newTasks", JSON.stringify(newTodos));
+    console.log(newTodos);
   };
-  const localTodo = JSON.parse(localStorage.getItem("newTasks"));
 
   const handleChange = (event, newValue) => {
-    // if newValues is 1, then it is the active tab
     setValue(newValue);
   };
-
-  const deleteTask = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const updatedTasks = localTodo.filter((task) => task.id !== id);
-        localStorage.setItem("newTasks", JSON.stringify(updatedTasks));
-        setNewTasks(updatedTasks);
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      }
-    });
-  };
-
-
-  const onCompletedTask = (id) => {
-    const completedTask = localTodo.map((task) => {
-      if (task.id === id) {
-        task.completed = !task.completed;
-      }
-      return task;
-    });
-    localStorage.setItem("newTasks", JSON.stringify(completedTask));
-    setNewTasks(completedTask);
-  };
-
-  const renderTasks = useCallback(
-    ({ completed }) => {
-      return localTodo.filter((task) => task.completed === completed);
-    },
-    [localTodo]
-  );
+  const { newTasks, setNewTasks } = UseTodo();
 
   return (
     <>
@@ -83,9 +48,10 @@ function Main() {
           margin: "auto",
           marginTop: "8%",
           marginBottom: "",
-          bgcolor: "white",
+          bgcolor: "blue",
           borderRadius: 1,
-          boxShadow: 10,
+          boxShadow: " 0 0 20px 0 blue",
+          bgcolor: "white",
         }}
       >
         <Box
@@ -94,38 +60,39 @@ function Main() {
             paddingTop: "30px",
           }}
         >
-          <form className="">
-            <TextField
-              id="outlined-basic"
-              label="Add Todo"
-              variant="outlined"
-              sx={{
-                bgcolor: "",
-                width: "60%",
-                height: "100%",
-                borderRadius: "10px",
-                bgcolor: "white",
-                color: "black",
-                marginRight: "20px",
-              }}
-              type="text"
-              value={todo}
-              onChange={(e) => setTodo(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              sx={{
-                width: "20%",
-                height: "55px",
-                padding: "",
-              }}
-              onClick={addTask}
-            >
-              Add
-            </Button>
-          </form>
+          <TextField
+            id="outlined-basic"
+            label="Add Todo"
+            variant="outlined"
+            sx={{
+              width: "60%",
+              height: "100%",
+              borderRadius: "10px",
+              bgcolor: "white",
+              color: "black",
+              marginRight: "20px",
+              boxShadow: 20,
+            }}
+            type="text"
+            value={todo}
+            onChange={(e) => setTodo(e.target.value)}
+          />
+          <Button
+            variant="contained"
+            sx={{
+              width: "20%",
+              height: "55px",
+              bgcolor: "blue",
+              fontWeight: "bold",
+              fontSize: "20px",
+              boxShadow: 20,
+            }}
+            onClick={addTask}
+          >
+            Add
+          </Button>
         </Box>
-        <Box sx={{ width: "100%", border: "", borderColor: "" }}>
+        <Box sx={{ width: "100%", }}>
           <Box
             sx={{
               borderBottom: 1,
@@ -138,24 +105,39 @@ function Main() {
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
+              
             >
               <Tab
                 key={"all"}
                 label="All"
                 {...a11yProps(0)}
-                sx={{ width: "33%" }}
+                sx={{
+                  width: "33%",
+                  fontWeight: "bold",
+                  color: "blue",
+                }}
               />
               <Tab
                 key={"active"}
                 label="Active"
                 {...a11yProps(1)}
-                sx={{ width: "33%" }}
+                sx={{
+                  width: "33%",
+                  fontWeight: "bold",
+                  color: "blue",
+                  borderRadius: 4,
+                  
+                }}
               />
               <Tab
                 key={"termine"}
-                label="Termine"
+                label="Completed"
                 {...a11yProps(2)}
-                sx={{ width: "33%" }}
+                sx={{
+                  width: "33%",
+                  fontWeight: "bold",
+                  color: "blue",
+                }}
               />
             </Tabs>
           </Box>
@@ -170,23 +152,15 @@ function Main() {
               },
             }}
           >
-            <Tabpanel value={value} index={0}>
-              {All(localTodo, deleteTask, onCompletedTask)}
-            </Tabpanel>
-            <Tabpanel value={value} index={1}>
-              {Active(
-                renderTasks({ completed: false }),
-                deleteTask,
-                onCompletedTask
-              )}
-            </Tabpanel>
-            <Tabpanel value={value} index={2}>
-              {Termine(
-                renderTasks({ completed: true }),
-                deleteTask,
-                onCompletedTask
-              )}
-            </Tabpanel>
+            <TabPanel value={value} index={0}>
+              <All />
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+              <Active />
+            </TabPanel>
+            <TabPanel value={value} index={2}>
+              <Finished />
+            </TabPanel>
           </Box>
         </Box>
       </Box>

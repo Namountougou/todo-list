@@ -1,21 +1,22 @@
-import React from "react";
-import {
-  Divider,
-  Switch,
-  Typography,
-} from "@mui/material";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-} from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {
+Box,List,
+ListItem,
+ListItemIcon,
+ListItemText,
+Switch,
+Typography
+} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
+import UseTodo from "../../state-manage/hook/useTodo";
+import "../Animation.css";
 
 const ItemList = (props) => {
-  const { tasks, deleteTask, onCompletedTask } = props;
+  const task = props.tasks;
+
+  const { deleteTask, onCompletedTask } = UseTodo();
   return (
+
     <List
       sx={{
         width: "100%",
@@ -23,30 +24,56 @@ const ItemList = (props) => {
         overflow: "auto",
       }}
     >
-      {tasks.map((task) => (
-        <>
+      {task.map((task) => (
+        <Box
+          key={task.id}
+          sx={{
+            borderRadius: "10px",
+            boxShadow: 10,
+            mt: "10px",
+            color: "white",
+            fontSize: "20px",
+            bgcolor: "blue",
+            fontWeight: "bold",
+
+            ...(task.completed && {
+              textDecoration: "line-through",
+              boxShadow: 15,
+              opacity: "0.4",
+            }),
+          }}
+          id="anim"
+        >
           <ListItem
             sx={{
               pl: 0,
             }}
-            key={task.id}
             secondaryAction={
               <IconButton
                 onClick={() => deleteTask(task.id)}
                 edge="end"
                 aria-label="delete"
               >
-                <DeleteIcon />
+                <DeleteIcon
+                  sx={{
+                    color: "white",
+                  }}
+                />
               </IconButton>
             }
           >
-            <ListItemText id={task.id}>
+            <ListItemText
+              id={task.id}
+              sx={{
+                pl: "10px",
+              }}
+            >
               <Typography
                 sx={{
                   ...(task.completed && {
                     opacity: 0.5,
                     textDecoration: "line-through",
-                    color: "red",
+                    color: "white",
                   }),
                   marginBottom: "5px",
                 }}
@@ -60,16 +87,15 @@ const ItemList = (props) => {
                 checked={task.completed}
                 onChange={() => onCompletedTask(task.id)}
                 tabIndex={-1}
+                sx={{
+                  color: "white",
+                }}
               />
             </ListItemIcon>
           </ListItem>
-          <Divider />
-        </>
+        </Box>
       ))}
     </List>
   );
-}
+};
 export default ItemList;
-   
-   
-  

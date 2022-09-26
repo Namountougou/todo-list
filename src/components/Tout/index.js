@@ -1,37 +1,17 @@
-import React, { useEffect } from "react";
-import {
-  Box,
-  Divider,
-  TextField,
-  Button,
-  Switch,
-  Typography,
-} from "@mui/material";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  Checkbox,
-} from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
-import { useState } from "react";
-import { Task } from "@mui/icons-material";
+import { Box } from "@mui/material";
+import UseTodo from "../../state-manage/hook/useTodo";
 import ItemList from "../ItemList";
 
-const All = (tasks, deleteTask, onCompletedTask) => {
-  return (
-    <>
-      <ItemList
-        tasks={tasks}
-        deleteTask={deleteTask}
-        onCompletedTask={onCompletedTask}
-
-      />
-
-    </>
-  );
+const All = () => {
+  const { newTasks } = UseTodo();
+  if (newTasks.length === 0) {
+    return (
+      <Box>
+        <p> Aucun element</p>
+      </Box>
+    );
+  }
+  return <ItemList tasks={newTasks} />;
 };
 
 export default All;

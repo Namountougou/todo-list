@@ -1,0 +1,18 @@
+#anim {
+	-webkit-animation: rotate-scale-up-hor 1s linear both;
+	        animation: rotate-scale-up-hor 1s linear both;
+}
+@-webkit-keyframes rotate-scale-up-hor {
+    0% {
+        -webkit-transform: rotate(0deg) scale(1);
+                transform: rotate(0deg) scale(1);
+    }
+    50% {
+        -webkit-transform: rotate(120deg) scale(1.1);
+                transform: rotate(120deg) scale(1.1);
+    }
+    100% {
+        -webkit-transform: rotate(360deg) scale(1.5);
+                transform: rotate(360deg) scale(1.5);
+    }
+}
