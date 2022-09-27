@@ -16,7 +16,6 @@ const ItemList = (props) => {
 
   const { deleteTask, onCompletedTask } = UseTodo();
   return (
-
     <List
       sx={{
         width: "100%",
@@ -29,17 +28,16 @@ const ItemList = (props) => {
           key={task.id}
           sx={{
             borderRadius: "10px",
-            boxShadow: 10,
             mt: "10px",
-            color: "white",
+            color: "",
             fontSize: "20px",
-            bgcolor: "blue",
+            border: "1px solid #ccc",
             fontWeight: "bold",
+            pl: "10px",
 
             ...(task.completed && {
               textDecoration: "line-through",
-              boxShadow: 15,
-              opacity: "0.4",
+              border: "1px solid green",
             }),
           }}
           id="anim"
@@ -55,9 +53,7 @@ const ItemList = (props) => {
                 aria-label="delete"
               >
                 <DeleteIcon
-                  sx={{
-                    color: "white",
-                  }}
+                  
                 />
               </IconButton>
             }
@@ -70,10 +66,13 @@ const ItemList = (props) => {
             >
               <Typography
                 sx={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
                   ...(task.completed && {
-                    opacity: 0.5,
                     textDecoration: "line-through",
-                    color: "white",
+                    color: "green",
+                    opacity: 0.6,
+
                   }),
                   marginBottom: "5px",
                 }}

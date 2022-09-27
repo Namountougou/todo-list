@@ -1,4 +1,4 @@
-import { Box,Button,Tab,Tabs,TextField } from "@mui/material";
+import { Box,Button,rgbToHex,Tab,Tabs,TextField } from "@mui/material";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import Active from "../../components/Active";
@@ -43,15 +43,15 @@ function Main() {
     <>
       <Box
         sx={{
-          width: "30%",
-          height: "600px",
+          width: "500px",
+          minHeight: "600px",
           margin: "auto",
           marginTop: "8%",
           marginBottom: "",
           bgcolor: "blue",
           borderRadius: 1,
-          boxShadow: " 0 0 20px 0 blue",
-          bgcolor: "white",
+          boxShadow: " 0 0 30px 0 rgba(0,0,0,0.5)",
+          bgcolor: "transparent",
         }}
       >
         <Box
@@ -67,11 +67,13 @@ function Main() {
             sx={{
               width: "60%",
               height: "100%",
-              borderRadius: "10px",
-              bgcolor: "white",
+              borderRadius:2,
+              bgcolor: "",
               color: "black",
               marginRight: "20px",
               boxShadow: 20,
+              fontSize: "20px",
+              fontWeight: "bold",
             }}
             type="text"
             value={todo}

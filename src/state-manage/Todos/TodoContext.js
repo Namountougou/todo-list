@@ -10,9 +10,9 @@ const TodoProvider = ({ children }) => {
   const deleteTask = (id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
+      text: "You won't be able to revert this",
       showCancelButton: true,
+      position: "top",
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes",
@@ -21,7 +21,13 @@ const TodoProvider = ({ children }) => {
         const updatedTasks = localTodo.filter((task) => task.id !== id);
         localStorage.setItem("newTasks", JSON.stringify(updatedTasks));
         setNewTasks(updatedTasks);
-        await Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        await Swal.fire( {
+          position: "top",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1000,
+          
+          });
       }
     });
   };
