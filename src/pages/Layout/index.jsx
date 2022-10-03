@@ -35,7 +35,7 @@ function Main() {
     <>
       <Box
         sx={{
-          width: "500px",
+          width: "25%",
           minHeight: "600px",
           margin: "auto",
           marginTop: "8%",
