@@ -1,4 +1,4 @@
-# [react-firebase-todo](https://react-firebase-todo-1ffa7.web.app/)
+# [react-firebase-todo](https://fir-todo-471dc.web.app/)
 
 ## Steps
 
