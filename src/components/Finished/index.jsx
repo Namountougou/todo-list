@@ -1,11 +1,11 @@
 import { Box } from "@mui/material";
 import UseTodo from "../../state-manage/hook/useTodo";
-import ItemList from "../ItemList";
+import ItemList from "../List";
 
 const Finished = () => {
   const { todoCompleted } = UseTodo();
 
-  if (todoCompleted.length === 0) {
+  if (todoCompleted?.length === 0) {
     return (
       <Box>
         <p>Aucun element</p>
