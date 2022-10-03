@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import UseTodo from "../../state-manage/hook/useTodo";
-import ItemList from "../ItemList";
+import ItemList from "../List";
 
 const All = () => {
   const { newTasks } = UseTodo();

@@ -2,10 +2,10 @@ import { Box, Button, Tab, Tabs, TextField } from "@mui/material";
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import Active from "../../components/Active";
-import { a11yProps } from "../../components/tabs/allyprops";
-import TabPanel from "../../components/tabs/Tabpanel";
-import Finished from "../../components/Termine";
-import All from "../../components/Tout";
+import All from "../../components/All";
+import Finished from "../../components/Finished";
+import { a11yProps } from "../../components/Tabs/allyprops";
+import TabPanel from "../../components/Tabs/Tabpanel";
 import { db } from "../../Firebase/Firebase-config";
 import useTodo from "../../state-manage/hook/useTodo";
 function Main() {

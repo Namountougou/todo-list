@@ -14,7 +14,6 @@ import "../Animation.css";
 
 const ItemList = (props) => {
   const tasks = props.tasks;
-  console.log(tasks);
   const { deleteTask, onCompletedTask } = UseTodo();
   return (
     <List
@@ -84,9 +83,6 @@ const ItemList = (props) => {
                 checked={task.completed}
                 onChange={() => onCompletedTask(task)}
                 tabIndex={-1}
-                sx={{
-                  color: "white",
-                }}
               />
             </ListItemIcon>
           </ListItem>
