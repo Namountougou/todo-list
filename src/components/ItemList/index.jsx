@@ -1,19 +1,20 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import {
-Box,List,
-ListItem,
-ListItemIcon,
-ListItemText,
-Switch,
-Typography
+  Box,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Switch,
+  Typography,
 } from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import UseTodo from "../../state-manage/hook/useTodo";
 import "../Animation.css";
 
 const ItemList = (props) => {
-  const task = props.tasks;
-
+  const tasks = props.tasks;
+  console.log(tasks);
   const { deleteTask, onCompletedTask } = UseTodo();
   return (
     <List
@@ -23,7 +24,7 @@ const ItemList = (props) => {
         overflow: "auto",
       }}
     >
-      {task.map((task) => (
+      {tasks.map((task) => (
         <Box
           key={task.id}
           sx={{
@@ -37,7 +38,7 @@ const ItemList = (props) => {
 
             ...(task.completed && {
               textDecoration: "line-through",
-              border: "1px solid green",
+              border: "1px solid red",
             }),
           }}
           id="anim"
@@ -48,13 +49,11 @@ const ItemList = (props) => {
             }}
             secondaryAction={
               <IconButton
-                onClick={() => deleteTask(task.id)}
+                onClick={() => deleteTask(task)}
                 edge="end"
                 aria-label="delete"
               >
-                <DeleteIcon
-                  
-                />
+                <DeleteIcon />
               </IconButton>
             }
           >
@@ -70,9 +69,8 @@ const ItemList = (props) => {
                   fontWeight: "bold",
                   ...(task.completed && {
                     textDecoration: "line-through",
-                    color: "green",
+                    color: "red",
                     opacity: 0.6,
-
                   }),
                   marginBottom: "5px",
                 }}
@@ -84,7 +82,7 @@ const ItemList = (props) => {
               <Switch
                 edge="start"
                 checked={task.completed}
-                onChange={() => onCompletedTask(task.id)}
+                onChange={() => onCompletedTask(task)}
                 tabIndex={-1}
                 sx={{
                   color: "white",

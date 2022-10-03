@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { enableIndexedDbPersistence, getFirestore } from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
 // import { getFirestore } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-firestore.js";
 
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,5 +16,4 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebaseTodo = initializeApp(firebaseConfig);
-const db = getFirestore(firebaseTodo);
-enableIndexedDbPersistence(db);
+export const db = getFirestore(firebaseTodo);

@@ -5,7 +5,7 @@ import ItemList from "../ItemList";
 const Active = () => {
   const { todoActive } = UseTodo();
 
-  if (todoActive.length === 0) {
+  if (todoActive?.length === 0) {
     return (
       <Box>
         <p>Aucun element</p>
@@ -15,4 +15,5 @@ const Active = () => {
 
   return <ItemList tasks={todoActive} />;
 };
+
 export default Active;

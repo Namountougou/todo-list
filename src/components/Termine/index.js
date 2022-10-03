@@ -5,7 +5,7 @@ import ItemList from "../ItemList";
 const Finished = () => {
   const { todoCompleted } = UseTodo();
 
-  if (todoCompleted.length === 0) {
+  if (todoCompleted?.length === 0) {
     return (
       <Box>
         <p>Aucun element</p>

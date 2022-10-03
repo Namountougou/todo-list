@@ -4,7 +4,7 @@ import ItemList from "../ItemList";
 
 const All = () => {
   const { newTasks } = UseTodo();
-  if (newTasks.length === 0) {
+  if (newTasks?.length === 0) {
     return (
       <Box>
         <p> Aucun element</p>

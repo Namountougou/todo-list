@@ -1,43 +1,35 @@
-import { Box,Button,rgbToHex,Tab,Tabs,TextField } from "@mui/material";
+import { Box, Button, Tab, Tabs, TextField } from "@mui/material";
+import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
-import Swal from "sweetalert2";
 import Active from "../../components/Active";
 import { a11yProps } from "../../components/tabs/allyprops";
 import TabPanel from "../../components/tabs/Tabpanel";
 import Finished from "../../components/Termine";
 import All from "../../components/Tout";
-import UseTodo from "../../state-manage/hook/useTodo";
+import { db } from "../../Firebase/Firebase-config";
+import useTodo from "../../state-manage/hook/useTodo";
 function Main() {
   const [value, setValue] = useState(0);
-  const [todo, setTodo] = useState("");
+  const [title, setTitle] = useState("");
 
-  const addTask = () => {
-    const newTask = {
-      id: new Date().getTime().toString(),
-      title: todo,
-      completed: false,
-    };
+  const { loading, setLoading } = useTodo();
 
-    if (todo === "") {
-      Swal.fire({
-        title: "Please enter a task",
-        icon: "error",
-        timer: 2000,
+  const addTask = async (e) => {
+    e.preventDefault();
+    if (title !== "") {
+      await addDoc(collection(db, "todos"), {
+        title: title,
+        completed: false,
       });
+      setTitle("");
+
       return;
     }
-
-    const newTodos = [...newTasks, newTask];
-    setNewTasks(newTodos);
-    setTodo("");
-    localStorage.setItem("newTasks", JSON.stringify(newTodos));
-    console.log(newTodos);
   };
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-  const { newTasks, setNewTasks } = UseTodo();
 
   return (
     <>
@@ -48,7 +40,6 @@ function Main() {
           margin: "auto",
           marginTop: "8%",
           marginBottom: "",
-          bgcolor: "blue",
           borderRadius: 1,
           boxShadow: " 0 0 30px 0 rgba(0,0,0,0.5)",
           bgcolor: "transparent",
@@ -67,17 +58,17 @@ function Main() {
             sx={{
               width: "60%",
               height: "100%",
-              borderRadius:2,
+              borderRadius: 2,
               bgcolor: "",
               color: "black",
               marginRight: "20px",
-              boxShadow: 20,
+              boxShadow: 10,
               fontSize: "20px",
               fontWeight: "bold",
             }}
             type="text"
-            value={todo}
-            onChange={(e) => setTodo(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <Button
             variant="contained"
@@ -94,7 +85,7 @@ function Main() {
             Add
           </Button>
         </Box>
-        <Box sx={{ width: "100%", }}>
+        <Box sx={{ width: "100%" }}>
           <Box
             sx={{
               borderBottom: 1,
@@ -107,7 +98,6 @@ function Main() {
               value={value}
               onChange={handleChange}
               aria-label="basic tabs example"
-              
             >
               <Tab
                 key={"all"}
@@ -128,7 +118,6 @@ function Main() {
                   fontWeight: "bold",
                   color: "blue",
                   borderRadius: 4,
-                  
                 }}
               />
               <Tab
@@ -155,7 +144,18 @@ function Main() {
             }}
           >
             <TabPanel value={value} index={0}>
-              <All />
+              {loading ? (
+                <div className="flex justify-center items-center">
+                  <div
+                    className="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full m-12"
+                    role="status"
+                  >
+                    <span className="visually-hidden" />
+                  </div>
+                </div>
+              ) : (
+                <All />
+              )}
             </TabPanel>
             <TabPanel value={value} index={1}>
               <Active />
